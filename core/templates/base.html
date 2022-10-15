@@ -5,7 +5,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale-1, shrink-to-fit=no">
-    <title>Conflicting Interests: {{page_title}}</title>
+    {% if page_title %}
+        <title>Your App: {{page_title}}</title>
+    {% else %}
+        <title>Your App: {% block head_title %}{% endblock %}</title>
+    {% endif %}
 
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}

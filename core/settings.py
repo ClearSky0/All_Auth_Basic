@@ -178,6 +178,32 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email config
-if DEBUG:
+DEV_EMAIL = False
+if DEV_EMAIL:  # Development options  - REPLACE WITH DEBUG
     # EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+    # Use this to test SMTP
+    # run this in the shell -> python -m smtpd -n -c DebuggingServer localhost:1025
+    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    # EMAIL_HOST = 'localhost'
+    # EMAIL_PORT = 1025
+    # EMAIL_HOST_USER = ''
+    # EMAIL_HOST_PASSWORD = ''
+    # EMAIL_USE_TLS = False
+    # EMAIL_USE_SSL = False
+
+    # Use this to send to a file
+    # EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    # EMAIL_FILE_PATH = '/tmp/app-messages' # change this to a proper location
+else:
+    # Production
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.getenv('EMAIL_HOST')
+    EMAIL_PORT = os.getenv('EMAIL_PORT')
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+    EMAIL_USE_TLS = True
+    EMAIL_USE_SSL = False

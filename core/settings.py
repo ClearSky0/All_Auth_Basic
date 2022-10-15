@@ -39,6 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Third party apps
+    'bootstrap4',
+
+    # Your site apps
+    'core',
+    'your_app',
+
     # AllAuth Required
     'django.contrib.sites',
     'allauth',
@@ -50,6 +57,10 @@ INSTALLED_APPS = [
 
 # AllAuth Required
 SITE_ID = 1
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+# ACCOUNT_SIGNUP_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
 
 # AllAuth Provider specific settings
 # SOCIALACCOUNT_PROVIDERS = {
@@ -157,3 +168,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email config
+if DEBUG:
+    # EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

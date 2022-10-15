@@ -1,0 +1,182 @@
+<!doctype html>
+{% load bootstrap4 %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale-1, shrink-to-fit=no">
+    <title>Conflicting Interests: {{page_title}}</title>
+
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+
+    <style>
+        * {
+          box-sizing: border-box;
+        }
+        
+        .row {
+          display: flex;
+        }
+        
+        /* Create two equal columns that sits next to each other */
+        .column {
+          flex: 50%;
+          padding: 10px;
+        }
+
+        #myBtn {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed/sticky position */
+            bottom: 20px; /* Place the button at the bottom of the page */
+            right: 30px; /* Place the button 30px from the right */
+            z-index: 99; /* Make sure it does not overlap */
+            border: none; /* Remove borders */
+            outline: none; /* Remove outline */
+            background-color: red; /* Set a background color */
+            color: white; /* Text color */
+            cursor: pointer; /* Add a mouse pointer on hover */
+            padding: 15px; /* Some padding */
+            border-radius: 10px; /* Rounded corners */
+            font-size: 18px; /* Increase font size */
+            }
+
+        #myBtn:hover {
+           background-color: #555; /* Add a dark-grey background on hover */
+        }
+    </style>
+
+
+
+
+    <!-- Bootstrap CDN -->
+
+    <link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" media="screen">
+
+    <!-- Jquery CDN - must come before Select 2 usage -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Select 2 CNDs -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+</head>
+
+<body>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button> 
+    <script>
+        //Get the button
+        var mybutton = document.getElementById("myBtn");
+        
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+          } else {
+            mybutton.style.display = "none";
+          }
+        }
+        
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
+    </script>
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+
+        <a class="navbar-brand" href="{% url 'your_app:index' 'Home'%}">
+            Home</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarCollapse" aria-controls="navbarCollapse"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span></button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <!-- View functions -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'your_app:index' 'Option1' %}">Option1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'your_app:index' 'Option2' %}">Option2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'your_app:index' 'Option3' %}">Option3</a>
+                </li>
+                {% if user.is_authenticated %} 
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'your_app:index' 'Registered_Option4' %}">Registered Option4</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    {% comment %}
+                    <!-- <ul class="navbar-nav mr-auto">Data maintenance
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'data_maintenance:mps'%}">MPs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'data_maintenance:entities'%}">Entities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'data_maintenance:interests'%}">Interests</a>
+                        </li>
+                    </ul> -->
+                    {% endcomment %}
+                    {% if request.user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'your_app:index' 'Staff_Option' %}">Staff Option1</a>
+                        </li>
+                        <li class="nav-item" style="visibility: hidden">
+                            Spacer
+                        </li>
+                    {% endif %}    
+                    <li class="nav-item">
+                        <span class="navbar-text">
+                            {% if user.first_name %}
+                              Hello, {{ user.first_name }}.
+                            {% else %}
+                              Hello, {{ user.username }}.
+                            {% endif %}
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_logout' %}">Log out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_login' %}">Log in</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+        <div class="pb-2 mb-2 border-bottom">
+            {% block page_header %}{% endblock page_header %}
+        </div>
+        <div>
+            {% block content %}{% endblock content %}
+        </div>
+    </main>
+    {% block footer %}
+    {% endblock %}
+</body>

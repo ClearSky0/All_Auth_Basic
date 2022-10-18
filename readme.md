@@ -13,7 +13,7 @@ Once you've cloned the repo into your own project folder
 6. rename ".env update and rename to .env" to .env
 7. generate a secret key
 8. edit the .env file and put the secret key in and the email server details if required
-9. start the site.  For some weird reason it won't read .env if run from the shell with _python manage.py runserver 0.0.0.0:8000_, so just run it in vsCode.
+9. start the site.  Unless you want to modify manage.py to use load_dotenv() then just run in vscode rather than from the shell with _python manage.py runserver 0.0.0.0:8000_.  It works because of this, https://code.visualstudio.com/docs/python/environments, "The extension also loads an environment variable definitions file identified by the python.envFile setting. The default value of this setting is ${workspaceFolder}/.env."
 10. test the site
 11. make it yours
 
@@ -26,7 +26,7 @@ My preferred Powershell commands for the above, run from the base project folder
         pip install -r requirements.txt
         python manage.py migrate
         python manage.py createsuperuser
-        mv '.\.env update and rename to .env' .env
+        mv '.env update and rename to .env' .env
         python -c "import secrets; print(secrets.token_urlsafe())"
 
 Edit the .env file and add the secret key output above, then run from vsCode.

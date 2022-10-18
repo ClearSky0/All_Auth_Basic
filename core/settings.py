@@ -61,8 +61,9 @@ SITE_ID = 1
 # AllAuth Configuration
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email' # that's user or email
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL =True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_PRESERVE_USERNAME_CASING = False
@@ -178,8 +179,20 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email config
-DEV_EMAIL = False
-if DEV_EMAIL:  # Development options  - REPLACE WITH DEBUG
+USE_EMAIL_IN_DEV = os.getenv('USE_EMAIL_IN_DEV')
+
+if (not DEBUG) or USE_EMAIL_IN_DEV : 
+    # Production or send a email in development
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.getenv('EMAIL_HOST')
+    EMAIL_PORT = os.getenv('EMAIL_PORT')
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+    EMAIL_USE_TLS = True
+    EMAIL_USE_SSL = False
+else:
+     # Development options
     # EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -197,13 +210,3 @@ if DEV_EMAIL:  # Development options  - REPLACE WITH DEBUG
     # Use this to send to a file
     # EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
     # EMAIL_FILE_PATH = '/tmp/app-messages' # change this to a proper location
-else:
-    # Production
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = os.getenv('EMAIL_HOST')
-    EMAIL_PORT = os.getenv('EMAIL_PORT')
-    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-    EMAIL_USE_TLS = True
-    EMAIL_USE_SSL = False

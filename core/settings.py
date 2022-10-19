@@ -179,7 +179,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email config
-USE_EMAIL_IN_DEV = os.getenv('USE_EMAIL_IN_DEV')
+USE_EMAIL_IN_DEV = (False if os.getenv('USE_EMAIL_IN_DEV').lower() == 'false' else True)
 
 if (not DEBUG) or USE_EMAIL_IN_DEV : 
     # Production or send a email in development

@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from core import views
 
 urlpatterns = [
     path('', include('allauth.urls')), # AllAuth Required NB. Not default of 'accounts/'
     path('', include('your_app.urls')),
+    path('edit_user_details/', views.edit_user_details, name='edit_user_details'),
     path('admin/', admin.site.urls),
 ]

@@ -34,14 +34,4 @@
 </div>
 {% endblock page_header %}
 {% block content %}
-<center>
-    <a href="{% url 'your_app:index' 'About' %}">About</a> -
-    <a href="{% url 'your_app:index' 'Change_Log' %}">Change log</a>
-</center>
-{% if request.user.is_staff %}
-    <center>
-        <a href="./admin" target="blank">admin</a> - 
-        <a href="https://github.com/ClearSky0?tab=repositories" target="blank">github</a><br>
-    </center>
-{% endif %}
 {% endblock content %}

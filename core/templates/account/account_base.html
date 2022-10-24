@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="span3 columns well" style="margin-right:50px">
+      <h3>Account</h3>
+      <ul class="nav flex-column">
+        <li><a href="{% url 'account_logout' %}">Sign out</a></li>
+        <li><a href="{% url 'edit_user_details' %}">Name</a></li>
+        <li><a href="{% url 'account_email' %}">Email</a></li>
+        <li><a href="{% url 'account_change_password' %}">Password</a></li>
+      </ul>
+      <div style="margin-top: 50px;">
+        User id : {{ user }}<br>
+        First_name : {{ user.first_name }}<br>
+        Last_name : {{ user.last_name }}<br>
+        Last_login : {{ user.last_login }}<br>
+        First_login : {{ user.date_joined }}<br><br><br>
+      </div>
+    </div>
+    <div class="span9 columns well">
+      {% block content2 %}{% endblock %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,8 +1,9 @@
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import render #    get_object_or_404, redirect, 
 from django.contrib.auth.decorators import login_required
-# from django.contrib.auth.forms import UserChangeForm
 from core.forms import EditProfileForm
-from django.urls import is_valid_path
+from django.contrib import messages
+# from django.urls import is_valid_path
+# from django.contrib.auth.forms import UserChangeForm
 
 # Create your views here.
 
@@ -22,6 +23,8 @@ def edit_user_details(request):
         if form.is_valid():
             form.save()
             message = 'Details saved'
+
+    messages.success(request, message )
 
     context = {'user': request.user, 'message': message, 'form': form, 'page_title': page_title }
 

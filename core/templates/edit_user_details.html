@@ -2,10 +2,8 @@
 
 {% load bootstrap4 %}
 
-{% block content2 %}
-<div class="container">
+{% block content_well %}
   <h1>Update Name</h1>
-  <div class="row">
     <form action="{% url 'edit_user_details' %}" method="post" class="form">
       {% csrf_token %}
       {% bootstrap_form form %}
@@ -13,6 +11,4 @@
       <button type="submit" class="btn btn-primary">Update</button>
       {% endbuttons %}
     </form>
-  </div>
-</div>
-{% endblock %}
+{% endblock content_well %}

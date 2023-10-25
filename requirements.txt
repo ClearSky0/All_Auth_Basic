@@ -1,3 +1,8 @@
+# I didn't need this previously but I can't get past the python 
+# manage.py makemigrations failing to load .env file so
+python-dotenv
+
+# Django stuff
 Django
 django-bootstrap4
 django-allauth
